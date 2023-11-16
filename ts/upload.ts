@@ -1,10 +1,15 @@
 // the whole logic will be presented
 // in a singleton class
+
+import popup from './popup.js'
+
 export default new class UploadTab {
   // data field representing
   // user input in input.upload-input element
   private data = ''
+  private dataInput!: HTMLInputElement
   private validationLabel!: HTMLElement
+  private submitButton!: HTMLButtonElement
 
   // constructor loads all the
   // neccessary html elements
@@ -24,9 +29,9 @@ export default new class UploadTab {
     if (maybeInput === null || maybeInput.tagName !== 'INPUT') {
       throw new Error('Failed to mount data input')
     }
-    const inputElement = maybeInput as HTMLInputElement
-    inputElement.oninput = () => {
-      this.data = inputElement.value
+    this.dataInput = maybeInput as HTMLInputElement
+    this.dataInput.oninput = () => {
+      this.data = this.dataInput.value
       this.triggerDataValidation()
     }
   }
@@ -55,8 +60,22 @@ export default new class UploadTab {
       throw new Error('Failed to mount form')
     }
     const formElement = maybeForm as HTMLFormElement
+    const maybeSubmitButton = 
+      formElement.querySelector('button')
+    if (maybeSubmitButton === null) {
+      throw new Error('Failed to mount submit button')
+    }
+    this.submitButton = maybeSubmitButton
     formElement.onsubmit = event => {
       event.preventDefault()
+      const maybeError = this.performDataValidation()
+      if (maybeError) {
+        popup()
+          .title('Data is invalid')
+          .message(maybeError)
+          .timeout(3000)
+          .show()
+      }
       // TODO: ...
     }
   }
@@ -66,5 +85,11 @@ export default new class UploadTab {
   // the label below the input
   private triggerDataValidation = () => {
     // TODO: ...
+  }
+
+  // method that will check whether
+  // this.data field is valid or not
+  private performDataValidation = (): string | null => {
+    return 'TODO: implement validation'
   }
 }

@@ -24,3 +24,27 @@ body {
   font-family: sans-serif;
   background-color: #f5f5f5;
 }
+
+// also, the popup styles
+// will be also described here
+.popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  padding: 1.0em 1.5em;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  text-align: center;
+  h2 {
+    color: red;
+    margin-bottom: 0.5em; 
+  }
+  p { color: grey; }
+  max-width: 450px;
+
+  transition: 0.5s all ease-in-out;
+  &.active {
+    transform: translate(-50%, 0);
+  }
+}
