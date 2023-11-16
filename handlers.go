@@ -38,15 +38,21 @@ func initializeServer(app *gin.Engine) {
 }
 
 func mainPage(ctx *gin.Context) {
-  ctx.HTML(http.StatusOK, "index.html", gin.H{})
+  ctx.HTML(http.StatusOK, "index.html", gin.H{
+    "title": "Plottik: main page",
+  })
 }
 
 func uploadPage(ctx *gin.Context) {
-
+  ctx.HTML(http.StatusOK, "upload.html", gin.H{
+    "title": "Plottik: upload data",
+  })
 }
 
 func displayPage(ctx *gin.Context) {
-
+  ctx.HTML(http.StatusOK, "display.html", gin.H{
+    "title": "Plottik: display dashboard",
+  })
 }
 
 func fetchAPI(ctx *gin.Context) {

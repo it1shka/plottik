@@ -1,6 +1,11 @@
-{{ template "header.html" }}
-
-<h1> Main Page! </h1>
-<script src="/static/main.js"></script>
-
-{{ template "footer.html" }}
+{{ template "header.html" . }}
+<main class="container-centered">
+  <div class="container-centered__content">
+    <h1>Plottik📈</h1>
+    <small>Application for data visualization</small>
+    <div class="container-centered__content__links">
+      <a href="/upload">Upload data</a>
+      <a href="/display">Show data</a>
+    </div>
+</main>
+{{ template "footer.html" . }}

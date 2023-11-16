@@ -1,3 +1,18 @@
+// this file will contain
+// general styles for all
+// the pages. All the 
+// specific styles are 
+// packed inside of separate
+// scss files named appropriately
+
+// we import styles for 
+// our three html pages
+@use "index";
+@use "upload";
+@use "display";
+
+// we overwrite some basic
+// browser styles
 * {
   margin: 0;
   padding: 0;
