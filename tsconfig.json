@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2016",
+    "lib": ["dom", "es2016"],
     "module": "ES6",
     "rootDir": "ts",
     "outDir": "static", 

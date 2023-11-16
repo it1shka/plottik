@@ -2,16 +2,25 @@
 
 <main class="upload-container">
   <h1>Upload your data: </h1>
-  <form class="upload-container__form" method="POST" action="/api/put">
+  <form id="upload-container__form" method="POST" action="/api/put">
     <input required
       placeholder="Example: 1, 2, 3"
       name="data"
       id="upload-input" 
       type="text"
     />
-    <small>Start providing some data...</small>
+    <small id="upload-container__validation-label">Start providing some data...</small>
     <button type="submit">Send</button>
   </form>
+  <h2>History: </h2>
+  <ul class="upload-container__history">
+    <li>No record</li>
+    <li>No record</li>
+    <li>No record</li>
+  </ul>
+  <a class="upload-container__link-home" href="/"> Back home </a>
 </main>
+
+<script defer type="module" src="/static/upload.js"></script>
 
 {{ template "footer.html" . }}

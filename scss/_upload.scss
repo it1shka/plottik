@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
 
-  .upload-container__form {
+  #upload-container__form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -49,6 +49,44 @@
         transform: scale(1.1);
         background-color: #cf1934;
       }
+    }
+  }
+
+  .upload-container__history {
+    list-style-type: none;
+    width: min(80vw, 460px);
+    & > * + * {
+      margin-top: 0.5em;
+    }
+    
+    li {
+      display: block;
+      padding: 0.5em;
+      font-size: 1.1em;
+      background-color: white;
+      cursor: pointer;
+      border: 1px solid grey;
+
+      transition: 0.2s all ease-in-out;
+      &:hover {
+        transform: scale(1.05);
+        background-color: #ff2142;
+        color: white;
+        border: 1px solid transparent;
+      }
+    }
+  }
+
+  .upload-container__link-home {
+    font-size: 1.25em;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.1s all ease-in-out;
+    &:hover {
+      color: red;
+      transform: scale(1.1);
     }
   }
 }
