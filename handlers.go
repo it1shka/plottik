@@ -64,5 +64,7 @@ func putAPI(ctx *gin.Context) {
 }
 
 func notFoundPage(ctx *gin.Context) {
-
+  ctx.HTML(http.StatusNotFound, "404.html", gin.H{
+    "title": "Plottik: 404 Route Not Found",
+  })
 }

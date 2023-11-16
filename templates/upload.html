@@ -1,0 +1,17 @@
+{{ template "header.html" . }}
+
+<main class="upload-container">
+  <h1>Upload your data: </h1>
+  <form class="upload-container__form" method="POST" action="/api/put">
+    <input required
+      placeholder="Example: 1, 2, 3"
+      name="data"
+      id="upload-input" 
+      type="text"
+    />
+    <small>Start providing some data...</small>
+    <button type="submit">Send</button>
+  </form>
+</main>
+
+{{ template "footer.html" . }}
