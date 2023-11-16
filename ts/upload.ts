@@ -1,15 +1,13 @@
-// the whole logic will be presented
+// the whole logic of
+// UploadTab will be presented
 // in a singleton class
 
 import popup from './popup.js'
 
 export default new class UploadTab {
-  // data field representing
-  // user input in input.upload-input element
   private data = ''
   private dataInput!: HTMLInputElement
   private validationLabel!: HTMLElement
-  private submitButton!: HTMLButtonElement
 
   // constructor loads all the
   // neccessary html elements
@@ -60,12 +58,6 @@ export default new class UploadTab {
       throw new Error('Failed to mount form')
     }
     const formElement = maybeForm as HTMLFormElement
-    const maybeSubmitButton = 
-      formElement.querySelector('button')
-    if (maybeSubmitButton === null) {
-      throw new Error('Failed to mount submit button')
-    }
-    this.submitButton = maybeSubmitButton
     formElement.onsubmit = event => {
       event.preventDefault()
       const maybeError = this.performDataValidation()
@@ -79,6 +71,10 @@ export default new class UploadTab {
       // TODO: ...
     }
   }
+
+  // TODO: implement API class
+
+  // TODO: implement history
 
   // that method will perform data validation
   // if data is invalid, it will modify 
