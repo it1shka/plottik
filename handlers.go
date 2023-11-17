@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 	"strings"
@@ -69,19 +70,25 @@ func fetchAPI(ctx *gin.Context) {
 }
 
 // here I define a function to validate
-// data on the server. Basically, 
-// our data should be integers separated
-// by commas with arbitrary number of spaces
-// in between
-func validateData(data string) bool {
+// data on the server. Basically, our data
+// should be an integer list at least of 5 numbers,
+// which will contain only numbers from -100 to 100
+func validateData(data string) error {
   parts := strings.Split(data, ",")
+  if len(parts) < 5 {
+    return errors.New("The length of data should be at least 5")
+  }
   for _, part := range parts {
     trimmed := strings.TrimSpace(part)
-    if _, err := strconv.Atoi(trimmed); err != nil {
-      return false
+    intPart, err := strconv.Atoi(trimmed)
+    if err != nil {
+      return errors.New("Each part of data should be an integer")
+    }
+    if (intPart < -100 || intPart > 100) {
+      return errors.New("Each part should be between -100 and 100")
     }
   }
-  return true
+  return nil
 }
 
 func putAPI(ctx *gin.Context) {
@@ -91,8 +98,8 @@ func putAPI(ctx *gin.Context) {
     return
   }
   strData := string(rawData)
-  if !validateData(strData) {
-    ctx.String(http.StatusBadRequest, "You provided invalid data")
+  if err := validateData(strData); err != nil {
+    ctx.String(http.StatusBadRequest, err.Error())
     return
   }
   if err := newDataRecord(strData); err != nil {

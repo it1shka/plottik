@@ -85,7 +85,23 @@ export default new class UploadTab {
 
   // method that will check whether
   // this.data field is valid or not
+  // thus it returns an optional string
+  // which represents an error
   private performDataValidation = (): string | null => {
-    return 'TODO: implement validation'
+    const parts = this.data.split(',')
+    if (parts.length < 5) {
+      return 'The length of data should be at least 5'
+    }
+    for (const part of parts) {
+      const trimmed = part.trim()
+      if (!/^\d+$/.test(trimmed)) {
+        return 'Each part of data should be an integer'
+      }
+      const intPart = Number(trimmed)
+      if (intPart < -100 || intPart > 100) {
+        return 'Each part should be between -100 and 100'
+      }
+    }
+    return null
   }
 }
