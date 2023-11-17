@@ -2,8 +2,15 @@
 
 <main class="upload-container">
   <h1>Upload your data: </h1>
-  <form id="upload-container__form" method="POST" action="/api/put">
+  <form 
+    autocomplete="off" 
+    spellcheck="false" 
+    id="upload-container__form" 
+    method="POST" action="/api/put"
+  >
     <input required
+      autocomplete="off"
+      spellcheck="false"
       placeholder="Example: 1, 2, 3"
       name="data"
       id="upload-input" 

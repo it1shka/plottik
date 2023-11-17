@@ -9,12 +9,23 @@ export default new class UploadTab {
   private dataInput!: HTMLInputElement
   private validationLabel!: HTMLElement
 
+  // your requests will be saved in
+  // local storage history
+  private readonly historyKey = 'it1shka/plottik/history'
+  private history: string[]
+  private historyElements!: HTMLElement[]
+
   // constructor loads all the
   // neccessary html elements
   constructor() {
     this.mountInput()
     this.mountValidationLabel()
     this.mountForm()
+    // now, time to load history
+    this.mountHistory()
+    this.history = this.initializeHistory()
+    this.updateHistory()
+    //
     console.log('All components were mounted successfully')
   }
 
@@ -67,20 +78,91 @@ export default new class UploadTab {
           .message(maybeError)
           .timeout(3000)
           .show()
+        return
       }
-      // TODO: ...
+      // TODO: perform API call
+
+      // Writing to history and doing cleanup
+      this.addHistoryRecord(this.data)
+      this.dataInput.value = ''
+      this.data = ''
     }
   }
 
-  // TODO: implement API class
+  // mounting history component
+  private mountHistory = () => {
+    const maybeHistory = 
+      document.querySelector('.upload-container__history') ??
+      document.querySelector('ul')
+    if (maybeHistory === null) {
+      throw new Error('Failed to mount history')
+    }
+    const children = Array.from(maybeHistory.children)
+    const listElements = children.filter(elem => {
+      return elem.tagName === 'LI'
+    }) as HTMLElement[]
+    this.historyElements = listElements
+  }
 
-  // TODO: implement history
+  // pulling previous requests from local storage
+  private initializeHistory = (): string[] => {
+    if (!window.localStorage) {
+      return []
+    }
+    const maybeRawData = window.localStorage.getItem(this.historyKey)
+    if (maybeRawData === null) {
+      return []
+    }
+    const historyRecords = JSON.parse(maybeRawData) as string[]
+    return historyRecords
+  }
+
+  // updates history on 1) initialization 2) change
+  private updateHistory = () => {
+    for (let i = 0; i < this.historyElements.length; i++) {
+      const elem = this.historyElements[i]
+      if (i < this.history.length) {
+        const record = this.history[i]
+        elem.textContent = record
+        elem.onclick = () => {
+          this.data = record
+          this.dataInput.value = record
+          this.triggerDataValidation()
+        }
+        continue
+      }
+      elem.textContent = 'No record'
+    }
+  }
+
+  // adds a record to history
+  private addHistoryRecord = (record: string) => {
+    this.history.unshift(record)
+    while (this.history.length > 3) {
+      this.history.pop()
+    }
+    if (window.localStorage) {
+      const data = JSON.stringify(this.history)
+      window.localStorage.setItem(this.historyKey, data) 
+    }
+    this.updateHistory()
+  }
 
   // that method will perform data validation
   // if data is invalid, it will modify 
-  // the label below the input
+  // the label below the input and the input itself
   private triggerDataValidation = () => {
-    // TODO: ...
+    const error = this.performDataValidation()
+    if (error === null) {
+      this.validationLabel.textContent = 'Everything is alright!'
+      this.validationLabel.style.color = 'green'
+      this.dataInput.style.color = 'inherit'
+      return
+    }
+    // if we encounter an error: 
+    this.validationLabel.textContent = error
+    this.validationLabel.style.color = 'red'
+    this.dataInput.style.color = 'red'
   }
 
   // method that will check whether
@@ -94,7 +176,7 @@ export default new class UploadTab {
     }
     for (const part of parts) {
       const trimmed = part.trim()
-      if (!/^\d+$/.test(trimmed)) {
+      if (!/^\-?\d+$/.test(trimmed)) {
         return 'Each part of data should be an integer'
       }
       const intPart = Number(trimmed)
