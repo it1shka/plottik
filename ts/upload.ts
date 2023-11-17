@@ -3,6 +3,7 @@
 // in a singleton class
 
 import popup from './popup.js'
+import API from './api.js'
 
 export default new class UploadTab {
   private data = ''
@@ -80,7 +81,24 @@ export default new class UploadTab {
           .show()
         return
       }
-      // TODO: perform API call
+      // calling api
+      API.put(this.data)
+        .then(success => {
+          if (!success) {
+            popup()
+              .title('API Failure')
+              .message('Failed to upload data to the server')
+              .timeout(2500)
+              .show()
+            return
+          }
+          popup()
+            .title('Success!')
+            .color('green')
+            .message('Successfully uploaded data')
+            .timeout(2500)
+            .show()
+        })
 
       // Writing to history and doing cleanup
       this.addHistoryRecord(this.data)

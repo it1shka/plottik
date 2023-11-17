@@ -9,6 +9,7 @@ import { sleep } from './lib.js'
 type PopupConfig = Partial<{
   title:   string
   message: string
+  color:   string
   timeout: number
 }>
 
@@ -31,6 +32,7 @@ const PopupScheduler = new class {
     // creating popup title
     const popupTitle = document.createElement('h2')
     popupTitle.textContent = config.title ?? 'Unknown message'
+    popupTitle.style.color = config.color ?? 'red'
     popupRoot.appendChild(popupTitle)
 
     // creating popup message
@@ -91,6 +93,13 @@ class PopupBuilder {
     return new PopupBuilder({
       ...this.state,
       message: value
+    })
+  }
+
+  color = (value: string) => {
+    return new PopupBuilder({
+      ...this.state,
+      color: value
     })
   }
 
