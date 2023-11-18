@@ -82,10 +82,10 @@ func validateData(data string) error {
     trimmed := strings.TrimSpace(part)
     intPart, err := strconv.Atoi(trimmed)
     if err != nil {
-      return errors.New("Each part of data should be an integer")
+      return errors.New("Each part of data should be a natural number")
     }
-    if (intPart < -100 || intPart > 100) {
-      return errors.New("Each part should be between -100 and 100")
+    if intPart < 0 {
+      return errors.New("Each part should be a natural number (positive integer)")
     }
   }
   return nil

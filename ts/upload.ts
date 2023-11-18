@@ -195,11 +195,11 @@ export default new class UploadTab {
     for (const part of parts) {
       const trimmed = part.trim()
       if (!/^\-?\d+$/.test(trimmed)) {
-        return 'Each part of data should be an integer'
+        return 'Each part should be a natural number'
       }
       const intPart = Number(trimmed)
-      if (intPart < -100 || intPart > 100) {
-        return 'Each part should be between -100 and 100'
+      if (intPart < 0) {
+        return 'Each part should be a natural number (positive integer)'
       }
     }
     return null

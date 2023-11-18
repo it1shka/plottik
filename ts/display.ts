@@ -98,43 +98,40 @@ export default new class DisplayTab {
   // (there are three in total)
   private updateBargraph = (id: string, data: number[]) => {
     try {
+      // obtaining some useful parameters
       const display = this.d3.select(id)
       const displayWidth = display.attr('width')
       const displayHeight = display.attr('height')
+      const maxValue = this.d3.max(data)
+      const normalized = data.map(value => value / maxValue)
 
       // creating scales
       const xScale = this.d3
         .scaleBand()
         .domain(this.d3.range(data.length))
-        .range([0, displayWidth])
+        .range([0, displayWidth - 15])
         .padding(0.2)
       const yScale = this.d3
         .scaleLinear()
-        .domain([-100, 100])
-        .range([0, displayHeight])
-      
-      // entering new things
+        .domain([0, 1])
+        .range([0, displayHeight - 15])
+
+      // deleting old stuff
       display
         .selectAll('rect')
-        .data(data)
+        .remove()
+
+      // appending initial stuff
+      display
+        .selectAll('rect')
+        .data(normalized)
         .enter()
         .append('rect')
         .attr('x', (_, index) => xScale(index))
         .attr('y', value => displayHeight - yScale(value))
         .attr('width', xScale.bandwidth())
         .attr('height', value => yScale(value))
-        .attr('fill', value => value > 0 ? 'royalblue' : '#fc4503')
-
-      display
-        .selectAll('rect')
-        .data(data)
-        .transition()
-        .duration(500)
-        .attr('x', (_, index) => xScale(index))
-        .attr('y', value => displayHeight - yScale(value))
-        .attr('width', xScale.bandwidth())
-        .attr('height', value => yScale(value))
-        .attr('fill', value => value > 0 ? 'royalblue' : '#fc4503')
+        .attr('fill', 'royalblue')
     } catch (error) {
       console.error(error)
       popup()
