@@ -135,7 +135,6 @@ export default new class DisplayTab {
         .attr('width', xScale.bandwidth())
         .attr('height', value => yScale(value))
         .attr('fill', value => value > 0 ? 'royalblue' : '#fc4503')
-        
     } catch (error) {
       console.error(error)
       popup()
