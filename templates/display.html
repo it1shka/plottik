@@ -1,9 +1,33 @@
 {{ template "header.html" . }}
 
 <main class="display-container">
+  <div class="display-container__main-wrapper">
+    <svg 
+      id="main-data-display" 
+      width="700" 
+      height="500"
+    ></svg>
+  </div>
 
+  <div class="display-container__secondary-wrapper">
+    <svg 
+      id="second-data-display"
+      width="350" 
+      height="250"
+    ></svg>
+  </div>
+
+  <div class="display-container__secondary-wrapper">
+    <svg 
+      id="third-data-display"
+      width="350" 
+      height="250"
+    ></svg>
+  </div>
 </main>
 
-<script defer type="module" src="/static/display.js"></script>
+<a id="back-home" href="/">Back home</a>
+
+<script type="module" src="/static/display.js" defer></script>
 
 {{ template "footer.html" . }}
