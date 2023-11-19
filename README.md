@@ -46,27 +46,27 @@ and I was choosing my tech stack to be as simple
 as possible. 
 
 1. No JS frameworks
-I believe that if project is simple enough, 
+- I believe that if project is simple enough, 
 you can just go with vanilla js. Using something 
 like React or Angular would just overcomplicate it
 2. No build tools (webpack, rollup, parcel, etc.)
-Again, simple import statements are fine for me
+- Again, simple import statements are fine for me
 unless you really need to optimize your bundle 
 (treeshake) and manage complex dependencies 
 3. TypeScript
-Easy to add to a project, better than JavaScript
+- Easy to add to a project, better than JavaScript
 since it has nice autocomplete in my text editor
 and catches some fraction of errors.
 Better than JSDoc since it's more pleasant to write.
 4. Golang + batteries (Gin, GORM)
-Golang allows you to rapidly develop servers
+- Golang allows you to rapidly develop servers
 for your front-end part. Best backend tool
 in terms of development speed for me
 
 ## Nice additional features that I implemented:
 
 1. Popup system
-Creates beautiful messages, errors and warnings
+- Creates beautiful messages, errors and warnings
 2. History of uploads using window.localStorage
 3. Additional two pages: index.html and 404.html
 4. Minimal adaptivity capabilities for mobile devices
@@ -88,6 +88,8 @@ look the following way:
 git clone https://github.com/it1shka/plottik
 cd plottik
 chmod +x dev.py
-./dev.py
-open http://localhost:8080
+./dev.py & open http://localhost:8080
+# and then you need to refresh a page
+# since it takes some time to start
+# the server
 ```
