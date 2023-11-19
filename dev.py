@@ -3,6 +3,7 @@
 # This is a script that will
 # run application in development mode
 
+import pathlib
 import subprocess as sp
 import webbrowser
 
@@ -20,11 +21,13 @@ def main() -> None:
     1) Checks whether node.js installed
        if not, opens the webpage of node.js
        and quits
-    2) Checks whether all the dependencies are installed
+    2) Creates static/ directory if 
+       it does not exist
+    3) Checks whether all the dependencies are installed
        nodemon     -- to track typescript files
        typescript  -- to compile typescript files
        sass        -- to compile our styles
-    3) Runs a bunch of development commands
+    4) Runs a bunch of development commands
        in parallel
     '''
 
@@ -33,6 +36,9 @@ def main() -> None:
         print('Node.js is not installed. Please, install it to proceed')
         webbrowser.open('https://nodejs.org/en/')
         exit(1)
+
+    # ensuring static/ dir
+    pathlib.Path('static').mkdir(parents=True, exist_ok=True)
     
     # checking whether all the dependencies are installed
     dependencies = ['nodemon', 'sass', 'typescript']
